@@ -40,12 +40,13 @@ def extract_data(page):
         return price.text[:-1]
     except:
         print('erorr in data extraction')
+        return False
 
 def get_price_by_bs4(url:str)->int:
      page = requests.get(url)
      price = extract_data(page)
      print('price =  ',price)
-     return convert_price(price)
+     return convert_price(price) if price else 'error in extraction'
 
 
 
