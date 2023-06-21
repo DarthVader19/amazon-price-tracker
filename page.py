@@ -9,7 +9,9 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
 from bs4 import BeautifulSoup
+import requests
 import time
+
 
 
 
@@ -27,6 +29,23 @@ def get_price(url:str)->int:
        return convert_price(price.text)
 
 
+
+
+def extract_data(page):
+    pg_soup = BeautifulSoup(page.content,'html.parser')
+    try:
+        #somelogic
+        price = pg_soup.find('span',class_ = 'a-price-whole')
+        print(price , price.text)
+        return price.text[:-1]
+    except:
+        print('erorr in data extraction')
+
+def get_price_by_bs4(url:str)->int:
+     page = requests.get(url)
+     price = extract_data(page)
+     print('price =  ',price)
+     return convert_price(price)
 
 
 
